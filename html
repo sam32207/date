@@ -1,0 +1,129 @@
+<!DOCTYPE html><html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Date Invite 💌</title>
+  <link href="https://fonts.googleapis.com/css2?family=Shadows+Into+Light&family=Shadows+Into+Light+Two&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      font-family: 'Shadows Into Light', cursive;
+      background: linear-gradient(135deg, #ffdde1, #ee9ca7);
+      color: #333;
+      text-align: center;
+      overflow: hidden;
+    }
+    .page {
+      display: none;
+      font-size: 2rem;
+      font-weight: bold;
+      animation: fadeIn 1s ease;
+    }
+    .active {
+      display: block;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    button {
+      margin: 20px;
+      padding: 15px 30px;
+      font-size: 1.5rem;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: transform 0.3s;
+      font-family: 'Shadows Into Light', cursive;
+    }
+    .yes {
+      background: #ff4da6;
+      color: white;
+    }
+    .no {
+      background: #ccc;
+      color: black;
+    }
+    .header-text {
+      font-family: 'Shadows Into Light Two', cursive;
+      font-size: 2.5rem;
+    }
+    /* Confetti */
+    .confetti {
+      position: fixed;
+      width: 10px;
+      height: 10px;
+      background-color: red;
+      top: 0;
+      animation: fall 3s linear forwards;
+    }
+    @keyframes fall {
+      to {
+        transform: translateY(100vh) rotate(720deg);
+        opacity: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+  <audio id="bgm" src="your-music.mp3" autoplay loop></audio>  <div id="page1" class="page active header-text">Hello my love</div>
+  <div id="page2" class="page header-text">Good morning, I've been missing you a lot</div>
+  <div id="page3" class="page header-text">So I'm asking you out today....<br><span style="font-family:'Shadows Into Light', cursive;">Will you go out with me for the whole day?</span>
+    <br><br>
+    <button class="yes" onclick="sayYes()">YES 🥰</button>
+    <button class="no" onclick="sayNo()">no 🙅‍♀️</button>
+  </div>
+  <div id="pageYes" class="page header-text">
+    <div style="font-size:2.5rem; font-weight:bold;">YEYYYY 🎉</div>
+  </div>
+  <div id="pageFinal" class="page header-text">See you later my wife ❤️<br><span style="font-family:'Shadows Into Light', cursive;">I love you so much 💕</span></div>
+  <div id="pageNo" class="page header-text">😡😢 BIG NO 😢😡</div>  <script>
+    let currentPage = 1;
+    let noClicks = 0;
+
+    // Auto transition through first 3 pages
+    setTimeout(() => showPage(2), 2000);
+    setTimeout(() => showPage(3), 4000);
+
+    function showPage(num) {
+      document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+      document.getElementById('page' + num).classList.add('active');
+    }
+
+    function sayYes() {
+      showPage('Yes');
+      launchConfetti();
+      // After 3s, show final love message
+      setTimeout(() => showPage('Final'), 3000);
+    }
+
+    function sayNo() {
+      noClicks++;
+      let noBtn = document.querySelector('.no');
+      if (noClicks < 4) {
+        noBtn.style.transform = `translate(${Math.random()*100-50}px, ${Math.random()*100-50}px)`;
+      } else {
+        showPage('No');
+      }
+    }
+
+    function launchConfetti() {
+      for (let i = 0; i < 100; i++) {
+        let confetti = document.createElement('div');
+        confetti.classList.add('confetti');
+        confetti.style.left = Math.random() * 100 + 'vw';
+        confetti.style.backgroundColor = `hsl(${Math.random()*360}, 100%, 50%)`;
+        confetti.style.animationDuration = (Math.random() * 2 + 2) + 's';
+        document.body.appendChild(confetti);
+
+        setTimeout(() => {
+          confetti.remove();
+        }, 3000);
+      }
+    }
+  </script></body>
+</html>
